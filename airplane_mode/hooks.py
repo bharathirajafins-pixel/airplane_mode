@@ -5,6 +5,22 @@ app_description = "ticket booking"
 app_email = "bharathi7b650@gmail.com"
 app_license = "mit"
 
+
+website_redirects = [
+    {
+        "source": r"/flight\?(.*)",
+        "target": r"/book-flight-ticket-web-form/new?\1",
+        "match_with_query_string": True
+    }
+]
+
+
+scheduler_events = {
+    "monthly": [
+        "airplane_mode.airport_shop_management.doctype.shop_lease_contract.shop_lease_contract.send_monthly_rent_reminders"
+    ]
+}
+
 # Apps
 # ------------------
 

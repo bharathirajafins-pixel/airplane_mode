@@ -1,0 +1,140 @@
+<style>
+  .flight-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    font-family: "Inter", Arial, sans-serif;
+  }
+
+  .flight-header {
+    font-size: 26px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 10px;
+  }
+
+  .flight-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  }
+
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 16px;
+  }
+
+  .flight-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .flight-details li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    font-size: 15px;
+    color: #374151;
+  }
+
+  .flight-details li:last-child {
+    border-bottom: none;
+  }
+
+  .flight-details b {
+    color: #111827;
+  }
+
+  .cta-section {
+    margin-top: 24px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .book-btn {
+    background-color: #2563eb;
+    color: #ffffff;
+    padding: 12px 22px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  .book-btn:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    font-size: 14px;
+    color: #2563eb;
+    text-decoration: none;
+    align-self: center;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="flight-detail-container">
+  <div class="flight-header">
+    {{ doc.name }}
+  </div>
+
+  <div class="flight-card">
+    <div class="section-title">Flight Details</div>
+
+    <ul class="flight-details">
+      <li>
+        <span><b>Airline:</b></span>
+        <span>{{ airline_name }}</span>
+      </li>
+
+      <li>
+        <span><b>Route:</b></span>
+        <span>{{ doc.source_airport_code }} → {{ doc.destination_airport_code }}</span>
+      </li>
+
+      <li>
+        <span><b>Date:</b></span>
+        <span>{{ frappe.utils.format_date(doc.date_of_departure, "d MMMM, YYYY") }}</span>
+      </li>
+
+      <li>
+        <span><b>Time:</b></span>
+        <span>{{ doc.time_of_departure }}</span>
+      </li>
+
+      <li>
+        <span><b>Duration:</b></span>
+        <span>{{ formatted_duration }}</span>
+      </li>
+
+      <li>
+        <span><b>Price:</b></span>
+        <span>{{ formatted_price }}</span>
+      </li>
+    </ul>
+
+    <div class="cta-section">
+      <a href="/book-flight-ticket-web-form/new?flight={{ doc.name }}&price={{ doc.price }}"
+         class="book-btn">
+        Book This Flight
+      </a>
+
+      <a href="/flights" class="back-link">
+        ← Back to all flights
+      </a>
+    </div>
+  </div>
+</div>

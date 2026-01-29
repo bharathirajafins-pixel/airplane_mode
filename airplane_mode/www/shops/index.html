@@ -1,0 +1,160 @@
+<link rel="stylesheet" href="/assets/airplane_mode/css/shop.css">
+
+<style>
+  .shop-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #1f2937;
+  }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .shop-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .shop-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+  }
+
+  .shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .shop-number {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .shop-status {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .shop-status.available {
+    background: #e7f7ee;
+    color: #166534;
+  }
+
+  .shop-status.occupied {
+    background: #fdecea;
+    color: #991b1b;
+  }
+
+  .shop-status.maintenance {
+    background: #fff4e5;
+    color: #92400e;
+  }
+
+  .shop-body {
+    margin-top: 12px;
+  }
+
+  .shop-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .label {
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  .value {
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .shop-footer {
+    margin-top: 16px;
+    text-align: right;
+  }
+
+  .details-link {
+    color: #2563eb;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+
+  .details-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .shop-row {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .shop-footer {
+      text-align: left;
+    }
+  }
+</style>
+
+<div class="shop-container">
+  <h1 class="page-title">Available Airport Shops</h1>
+
+  <div class="shop-grid">
+    {% for shop in shops %}
+      <div class="shop-card">
+
+        <div class="shop-header">
+          <h2 class="shop-number">
+            Shop {{ shop.shop_number }}
+          </h2>
+
+          <span class="shop-status {{ shop.status|lower }}">
+            {{ shop.status }}
+          </span>
+        </div>
+
+        <div class="shop-body">
+          <p class="shop-row">
+            <span class="label">Airport</span>
+            <span class="value">{{ shop.airport }}</span>
+          </p>
+
+          <p class="shop-row">
+            <span class="label">Area</span>
+            <span class="value">{{ shop.area }} sq.ft</span>
+          </p>
+        </div>
+
+        <div class="shop-footer">
+          <a class="details-link"
+             href="/shops/shop?shop={{ shop.shop_name }}">
+            View Details →
+          </a>
+        </div>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>

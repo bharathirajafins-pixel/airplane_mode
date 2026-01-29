@@ -1,0 +1,98 @@
+<style>
+  .flight-container {
+    max-width: 900px;
+    margin: 30px auto;
+    font-family: "Inter", Arial, sans-serif;
+  }
+
+  .flight-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .flight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .airline-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .route {
+    font-size: 16px;
+    margin-top: 6px;
+    color: #374151;
+  }
+
+  .flight-meta {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  .book-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  .book-btn:hover {
+    background: #1d4ed8;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .no-flights {
+    text-align: center;
+    padding: 40px;
+    font-size: 16px;
+    color: #6b7280;
+  }
+</style>
+
+<div class="flight-container">
+  <h1>Available Flights</h1>
+
+  {% if flights %}
+    {% for flight in flights %}
+      <div class="flight-card">
+        <div class="airline-name">
+          {{ frappe.db.get_value("Airplane", flight.airplane, "airline") or flight.airplane }}
+        </div>
+
+        <div class="route">
+          {{ flight.source_airport_code }} → {{ flight.destination_airport_code }}
+        </div>
+
+        <div class="flight-meta">
+          {{ frappe.utils.format_date(flight.date_of_departure, "d MMMM, YYYY") }}
+          | {{ flight.time_of_departure }}
+          | {{ flight.formatted_duration }}
+        </div>
+
+        <a class="book-btn" href="/flights/flight?flight={{ flight.name }}">
+          View Details & Book
+        </a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="no-flights">
+      No flights available at the moment.
+    </div>
+  {% endif %}
+</div>
